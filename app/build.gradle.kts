@@ -51,7 +51,7 @@ kotlin {
 configure<ApplicationExtension> {
     namespace = "com.aurora.store"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 0
         }
     }
@@ -62,7 +62,7 @@ configure<ApplicationExtension> {
             version = release(23)
         }
         targetSdk {
-            version = release(36)
+            version = release(37)
         }
 
         versionCode = 76
