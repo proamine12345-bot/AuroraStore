@@ -57,6 +57,7 @@ private data class PublishedApk(
 )
 
 private val client = OkHttpClient()
+private const val STORE_MARKER = "[AURORA_STORE_PUBLISHED]"
 
 @Composable
 fun StoreScreen(
@@ -71,7 +72,7 @@ fun StoreScreen(
     var version by remember { mutableStateOf("") }
     var selectedApk by remember { mutableStateOf<Uri?>(null) }
     var apps by remember { mutableStateOf<List<PublishedApk>>(emptyList()) }
-    var status by remember { mutableStateOf("اضغط تحديث لعرض التطبيقات المنشورة") }
+    var status by remember { mutableStateOf("لا توجد تطبيقات منشورة بعد") }
     var busy by remember { mutableStateOf(false) }
 
     val picker = rememberLauncherForActivityResult(
@@ -131,7 +132,7 @@ fun StoreScreen(
         item {
             Text("المتجر", style = MaterialTheme.typography.headlineMedium)
             Text(
-                "متجر APK خاص بك: نشر التطبيقات عبر GitHub Releases وتنزيلها وتثبيتها على الهاتف.",
+                "متجر APK فارغ عند البداية. يظهر التطبيق هنا فقط بعد نشره من خلال هذا المتجر.",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -160,7 +161,7 @@ fun StoreScreen(
         item {
             Text("نشر APK", style = MaterialTheme.typography.titleLarge)
             Text(
-                "المفتاح يستخدم داخل الهاتف فقط لإنشاء Release ورفع ملف APK إلى المستودع المحدد.",
+                "لن يظهر أي APK موجود مسبقًا في المستودع. يظهر فقط ما يتم نشره عبر قسم النشر هنا.",
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -250,6 +251,7 @@ private suspend fun loadApps(repository: String): List<PublishedApk> = withConte
             for (i in 0 until releases.length()) {
                 val release = releases.getJSONObject(i)
                 if (release.optBoolean("draft") || release.optBoolean("prerelease")) continue
+                if (release.optString("body").trim() != STORE_MARKER) continue
                 val assets = release.optJSONArray("assets") ?: JSONArray()
                 for (j in 0 until assets.length()) {
                     val asset = assets.getJSONObject(j)
@@ -289,7 +291,7 @@ private suspend fun publishApk(
         val createBody = JSONObject()
             .put("tag_name", tag)
             .put("name", appName)
-            .put("body", "Published from Aurora Store")
+            .put("body", STORE_MARKER)
             .put("draft", false)
             .put("prerelease", false)
             .toString()
