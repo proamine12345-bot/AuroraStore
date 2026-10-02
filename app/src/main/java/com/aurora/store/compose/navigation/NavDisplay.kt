@@ -63,6 +63,7 @@ import com.aurora.store.compose.ui.preferences.updates.SourceFiltersScreen
 import com.aurora.store.compose.ui.preferences.updates.UpdatesPreferenceScreen
 import com.aurora.store.compose.ui.search.SearchScreen
 import com.aurora.store.compose.ui.splash.SplashScreen
+import com.aurora.store.compose.ui.store.StoreScreen
 import com.aurora.store.compose.ui.spoof.SpoofScreen
 import com.aurora.store.data.event.AuthEvent
 import com.aurora.store.data.event.InstallerEvent
@@ -189,6 +190,7 @@ fun NavDisplay(startDestination: NavKey) {
             is Destination.GoogleLogin -> backstack.add(Screen.GoogleLogin(destination.addAccount))
 
             Destination.Search -> backstack.add(Screen.Search)
+            Destination.Store -> backstack.add(Screen.Store)
             Destination.Downloads -> backstack.add(Screen.Downloads)
             Destination.Notifications -> backstack.add(Screen.Notifications)
             Destination.Accounts -> backstack.add(Screen.Accounts)
@@ -290,6 +292,8 @@ fun NavDisplay(startDestination: NavKey) {
             entry<Screen.InstallationPreference> {
                 InstallationPreferenceScreen(onNavigateTo = ::navigate)
             }
+
+            entry<Screen.Store> { StoreScreen(onNavigateTo = ::navigate) }
 
             entry<Screen.Search>(
                 metadata = metadata {
