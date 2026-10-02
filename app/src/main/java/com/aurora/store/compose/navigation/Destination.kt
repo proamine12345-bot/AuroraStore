@@ -23,6 +23,7 @@ sealed class Destination {
     data class AppUpdate(val update: Update) : Destination()
 
     data object Search : Destination()
+    data object Store : Destination()
     data object Downloads : Destination()
     data object Notifications : Destination()
 
