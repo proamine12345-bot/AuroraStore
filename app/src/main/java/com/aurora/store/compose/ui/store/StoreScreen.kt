@@ -66,7 +66,7 @@ fun StoreScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var repository by remember { mutableStateOf("proamine12345-bot/AuroraStore") }
+    val repository = "proamine12345-bot/AuroraStore"
     var token by remember { mutableStateOf("") }
     var appName by remember { mutableStateOf("") }
     var version by remember { mutableStateOf("") }
@@ -132,27 +132,14 @@ fun StoreScreen(
         item {
             Text("المتجر", style = MaterialTheme.typography.headlineMedium)
             Text(
-                "متجر APK فارغ عند البداية. يظهر التطبيق هنا فقط بعد نشره من خلال هذا المتجر.",
+                "هذا متجرك الخاص. يبدأ بـ 0 تطبيق، ولا يظهر أي تطبيق خارجي. يظهر فقط APK الذي يُنشر من هنا.",
                 style = MaterialTheme.typography.bodyMedium
-            )
-        }
-
-        item {
-            OutlinedTextField(
-                value = repository,
-                onValueChange = { repository = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text("مستودع المتجر owner/repo") },
-                singleLine = true
             )
         }
 
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = { refresh() }, enabled = !busy) { Text("تحديث") }
-                TextButton(onClick = { onNavigateTo(Destination.Main(0)) }) {
-                    Text("رجوع")
-                }
             }
         }
 
@@ -161,7 +148,7 @@ fun StoreScreen(
         item {
             Text("نشر APK", style = MaterialTheme.typography.titleLarge)
             Text(
-                "لن يظهر أي APK موجود مسبقًا في المستودع. يظهر فقط ما يتم نشره عبر قسم النشر هنا.",
+                "اختر APK، اكتب الاسم والإصدار، ثم اضغط نشر. لن تظهر إصدارات AuroraStore الأصلية أو تطبيقات الآخرين.",
                 style = MaterialTheme.typography.bodySmall
             )
         }
