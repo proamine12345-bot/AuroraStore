@@ -39,6 +39,9 @@ sealed class Screen : NavKey, Parcelable {
     data object Search : Screen()
 
     @Serializable
+    data object Store : Screen()
+
+    @Serializable
     data class PermissionRationale(val requiredPermissions: Set<PermissionType>) : Screen()
 
     @Serializable
