@@ -83,6 +83,10 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
     val networkStatus = LocalNetworkStatus.current
+
+    // Private-store build: never expose Aurora's upstream catalog.
+    com.aurora.store.compose.ui.store.StoreScreen(onNavigateTo = onNavigateTo)
+    return
     val updates by mainViewModel.updateHelper.updates.collectAsStateWithLifecycle(
         initialValue = null
     )
