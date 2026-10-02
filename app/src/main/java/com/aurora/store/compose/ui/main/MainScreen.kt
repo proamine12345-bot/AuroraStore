@@ -196,6 +196,12 @@ fun MainScreen(
                             contentDescription = stringResource(R.string.title_download_manager)
                         )
                     }
+                    IconButton(onClick = { onNavigateTo(Destination.Store) }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_apps),
+                            contentDescription = "المتجر"
+                        )
+                    }
                     IconButton(onClick = { showMoreSheet = true }) {
                         Icon(
                             painter = painterResource(R.drawable.ic_settings_account),
